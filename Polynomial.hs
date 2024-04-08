@@ -38,6 +38,9 @@ sepPoly :: Polynomial -> [Polynomial]
 sepPoly (Polynomial []) = []
 sepPoly (Polynomial (x:xs)) = [Polynomial [x]] ++ (sepPoly (Polynomial xs))
 
+notZero :: Polynomial -> Polynomial
+notZero (Polynomial xs) = Polynomial (filter (\x -> fst x /= 0.0) xs)
+
 diff xs ys = [x | x<- xs, not (elem x ys)]
 
 ordening :: Ord a => [a] -> [a]
@@ -56,7 +59,7 @@ sumEqVarPoly (Polynomial terms) (v:vars) =
   in addPoly (Polynomial [(sum $ fst $ unzip $ terms_v, v)]) (sumEqVarPoly (Polynomial (diff terms terms_v)) vars)
 
 sumAllPoly :: Polynomial -> Polynomial
-sumAllPoly p = sumEqVarPoly p (set $ map (ordening) $ extVar p)
+sumAllPoly p = notZero $ sumEqVarPoly p (set $ map (ordening) $ extVar p)
 
 sumListPoly :: [Polynomial] -> Polynomial
 sumListPoly [p] = p
@@ -77,13 +80,12 @@ multiplyPoly (Polynomial terms1) (Polynomial terms2) =
 --Multiplicación de varios polinomios 
 multipSevPoly :: [Polynomial] -> Polynomial
 multipSevPoly [p] = p
-multipSevPoly (p:ps) = multiplyPoly p (multipSevPoly ps)
-
+multipSevPoly (p:ps) = notZero $ multiplyPoly p (multipSevPoly ps)
 
 --Evaluar un polinomio 
 evalVars :: Polynomial -> String -> [Double] -> Double 
 evalVars (Polynomial [(coef, "")]) _ _ = coef
-evalVars p _ [] = 1
+evalVars (Polynomial [(coef, _)]) "" [] = coef
 evalVars (Polynomial [(coef,var)]) (s:ss) (v:vs) = 
   let var_v = length $ filter (\x -> x == s) var
   in ((v^var_v) * (evalVars (Polynomial [(coef,var)]) ss vs))
