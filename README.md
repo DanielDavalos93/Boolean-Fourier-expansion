@@ -24,6 +24,7 @@ Polynomial [(1.0,"xx"),(1.0,"xy"),(2.0,"")]
 ```
 
 To evaluate a polynomial, use the `eval` function. You'll need a list of polynomial and list of values pairs: ``haskell eval :: [(Polynomial, [Double])] -> Double``. Generally we use a only pair (Polynomial,[Double]) in the list, but is useful to have this form to evaluate several polynomials $p_{x_1=a_1}(x_1)+\cdots + p_{x_n=a_n}(x_n)$. Such as the polynomial $p(x)+q(x,y) = (x+2) + (3xy)$ can be evaluate by $p_{x=1}(x) + q_{(x,y) = (-1,2)}(x,y) = -3$ using 
-```haskell 
+```
+Haskell 
 eval [(Polynomial [(1.0,"x"), (2.0,"")],[1]),(Polynomial [(3.0,"xy")],[-1,2])]
 ```
