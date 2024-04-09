@@ -16,6 +16,12 @@ $$f(x) = \displaystyle\sum_{a\in [-1,1]^n}f(a) 1_{\{a\}}(x)$$
 > [!TIP]
 > Write your own boolean function with the type ```f : [Double] -> Double```, because `Int < Double` and every operation in Int is inherit in Double.
 
+For example, for the AND function, we rewrite as `and' [1] = 1.0` and `and' (x:xs) = if x == -1 then -1 else and' xs`. Then, his representation in Fourier expansion can be shown by writing
+
+```
+polrep and' ["x","y"]
+```
+
 ## Polynomial.hs file
 A polynomial has the form `Polynomial (List (coef,var))`, where `coef :: Double` and `var :: String`. For example, the polynomial $x^2 + xy +2$ should be represented by 
 ```
