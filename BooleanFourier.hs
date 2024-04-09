@@ -33,6 +33,11 @@ emin2 = eval [(min2, [1,-1])]
 min3 = polrep (min') ["x","y","z"]
 emin3 = eval [(min3, [1,1,1])]
 
+--Maximum
+max' x = (maximum x) * (1.0)
+max2 = polrep (max') ["x","y"] 
+emax2 = eval [(max2, [1,-1])]
+
 --Or
 or' [-1] = -1.0
 or' (x:xs) = if x == 1 then 1 else or' xs
@@ -51,3 +56,6 @@ eq [x] = 1.0
 eq (x:(y:xs)) = if x /= y then 0.0 else eq (y:xs) 
 eqPol = polrep eq ["x","y"]
 
+--Indicator function
+--indf :: (Foldable t, Eq a, Double) => a -> t a -> Double
+indf x a = if elem x a then 1.0 else 0.0
