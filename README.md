@@ -18,7 +18,7 @@ $$f(x) = \displaystyle\sum_{a\in [-1,1]^n}f(a) 1_{\{a\}}(x)$$
 
 reordered by variables, then it has its representation
 
-$$polrep \ f(x) = \sum_{S \subseteq [n]} \hat{f}(S)\xi_S(x)$$
+$$polrep \ f(x) = \sum_{S \subseteq [n]} \hat{f}(S)\chi_S(x)$$
 
 > [!TIP]
 > Write your own boolean function with the type ```f : [Double] -> Double```, because `Int < Double` and every operation in Int is inherit in Double.
