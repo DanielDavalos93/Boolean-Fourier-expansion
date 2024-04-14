@@ -26,7 +26,7 @@ polrep and' ["x","y"]
 ```
 
 ## Polynomial.hs file
-A polynomial has the form `Polynomial (List (coef,var))`, where `coef :: Double` and `var :: String`. For example, the polynomial $x^2 + xy +2$ should be represented by 
+A polynomial has the form `Polynomial (List (coef,var))`, where `coef :: Double` and `var :: String`. Every pair `(coef,var)` is a monomial separate by sum. For example, the polynomial $x^2 + xy +2$ should be represented by 
 ```haskell
 Polynomial [(1.0,"xx"),(1.0,"xy"),(2.0,"")]
 ```
