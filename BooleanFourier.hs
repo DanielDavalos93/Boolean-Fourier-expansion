@@ -1,8 +1,8 @@
 module BooleanFourier where
 import Polynomial
 
---intToChar :: Int -> Char
---intToChar i | i>=0 && 255<i = (['a'..] !! i)
+intToChar :: Int -> Char
+intToChar i = (['a'..] !! i)
 
 --Indicator polynomial
 ind :: [Double] -> [String] -> Polynomial
@@ -56,6 +56,10 @@ eq [x] = 1.0
 eq (x:(y:xs)) = if x /= y then 0.0 else eq (y:xs) 
 eqPol = polrep eq ["x","y"]
 
---Indicator function
---indf :: (Foldable t, Eq a, Double) => a -> t a -> Double
-indf x a = if elem x a then 1.0 else 0.0
+--Majority
+maj :: [Double] -> Double
+maj (xs) = 
+  let s1 = filter (\x -> x == 1.0) xs; sm1 = filter (\x -> x == -1.0) xs
+  in if length s1 > length sm1 then 1.0 else -1 
+maj2 = polrep maj ["x","y"]
+maj5 = polrep maj ["a","b","c","d","e"]
