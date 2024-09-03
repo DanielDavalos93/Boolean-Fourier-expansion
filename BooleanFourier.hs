@@ -12,15 +12,15 @@ ind a x = multipSevPoly [multipSevPoly [Polynomial [(0.5,"")], Polynomial [(1,""
 {- ind (-1,1) (x1,x2) = 1 - x1 + x2 -x1*x2
    ind (-1,1) (1,1) = 1 -(-1) + 1 - (-1)*1 = 4
 -}
-test1 = ind [-1,1] ["a","b"] -- = Polynomial [(1.0,""), (-1.0,"a"), (1.0,"b"), (-1.0,"ab")]
-test2 = eval ([(ind [-1,1] ["a","b"], [1,1])]) -- = 4
+test1 = ind [-1,1] ["a","b"] -- Polynomial [(0.25,""), (-0.25,"a"), (0.25,"b"), (-0.25,"ab")]
+test2 = eval ([(ind [-1,1] ["a","b"], [1,1])]) -- 0.0
 
 {-
 Polynomial representation
  f x = sum_{a in [-1,1]^n} (f a x) * (ind a x)
 -}
 
-polrep :: ([Double] -> Double) -> [String] -> Polynomial 
+--polrep :: ([Double] -> Double) -> [String] -> Polynomial 
 polrep f x = sumListPoly [multiplyPoly (Polynomial [(f a,"")]) (ind a x) | a<-(comb (length x) [-1,1])]
 
 -- Examples --
@@ -41,20 +41,23 @@ emax2 = eval [(max2, [1,-1])]
 --Or
 or' [-1] = -1.0
 or' (x:xs) = if x == 1 then 1 else or' xs
-orPol = polrep or' ["x","y"]
-eor = eval [(orPol, [1,-1])]
+or2 = polrep or' ["x","y"]
+eor = eval [(or2, [1,-1])]
 
 --And
 and' [1] = 1.0
-and' (x:xs) = if x == -1 then -1 else and' xs
-andPol = polrep and' ["x","y"]
-eand = eval [(andPol, [1,-1])]
+and' (x:xs) = if x == -1.0 then -1.0 else and' xs
+and2 = polrep and' ["x","y"]
+eand = eval [(and2, [1,-1])]
 
 --Equ_n
 eq :: [Double] -> Double
 eq [x] = 1.0 
 eq (x:(y:xs)) = if x /= y then 0.0 else eq (y:xs) 
-eqPol = polrep eq ["x","y"]
+eq2 = polrep eq ["x","y"]
+
+eq' x = eq x + 1
+eq2' = polrep eq' ["x","y"]
 
 --Majority
 maj :: [Double] -> Double
