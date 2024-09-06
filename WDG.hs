@@ -6,12 +6,11 @@ type Weigth = Float
 
 type WDG = ([Vertex], [(Edge,Weigth)])
 
-graphToWDG :: Graph -> [Weigth] -> WDG 
-graphToWDG g ws = (fst g, [z | z <- (zip (snd g) ws)])
 
---example
-d1 = graphToWDG graph1 [0,1,0.5,2,1,-1,-2,0,0,1] 
--- 
+--Convertir un grafo con pesos dinámicos a un grafo simple
+wdgToGraph :: WDG -> Graph 
+wdgToGraph d = (fst d, fst $ unzip $ snd d)
+
 
 s :: Edge -> [Int] -> Int
 s e x = (x !! (fst e - 1)) * (x !! (snd e - 1))
@@ -36,3 +35,6 @@ norm d = sum [abs w | w <- snd $ unzip (snd d)]
 
 isNorm_n :: WDG -> Float -> Bool
 isNorm_n d n = norm d == n
+
+graphToWDG :: Graph -> [Weigth] -> WDG 
+graphToWDG g ws = (fst g, [(e,w/(sum [ abs w | w <- ws])) | (e,w) <- (zip (snd g) ws)])
