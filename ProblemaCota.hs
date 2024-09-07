@@ -1,6 +1,7 @@
 module ProblemaCota where
 import WDG
 import Graph 
+import Polynomial
 {- Este archivo es para probar casos del problema de la cota superior 
  - -}
 
@@ -24,11 +25,16 @@ wtr3 = graphToWDG gtr [0.1,-0.5,-0.4]
 edgeAdj :: Graph -> Vertex -> [Edge]
 edgeAdj g v = [ e | e <- snd g, (v == fst e || v == snd e)]
 
+--vepsilon :: WDG -> Vertex -> Float
+vepsilon d v = snd $ unzip $ filter (\(e,w) -> e `elem` (edgeAdj (wdgToGraph d) v)) (snd d)
+
 epsilon :: WDG -> Float
-epsilon d = maximum [sum [abs w | e <- (edgeAdj (wdgToGraph d) v), (e,w) <- (snd d) ] | v <- (fst d)]
+epsilon d = maximum $ [sum $ map abs (vepsilon d v) | v <- (fst d)]
 
 -- Grafo cuadrangular con pesos 
 gSq :: Graph
 gSq = ([1,2,3,4],[(1,2),(2,3),(3,4),(2,4),(3,1)])
 
-wgSq1 = graphToWDG gSq [1,-2,4,2,-1]
+wgSq = ([1,2,3,4],[((1,2),1),((2,3),-2),((3,4),4),((2,4),2),((3,1),-1),((1,4),2)])
+
+wgSq1 = graphToWDG gSq [-1,5,4,2,-1,2]
