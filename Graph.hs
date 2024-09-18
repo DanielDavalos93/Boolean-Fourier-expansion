@@ -2,6 +2,7 @@ module Graph where
 
 import           Data.List        (filter, find, map, nub, reverse)
 import qualified Data.Maybe       as Maybe
+import           Polynomial
 --import           Test.Tasty
 --import           Test.Tasty.HUnit
 
@@ -77,6 +78,11 @@ isMultigraph :: Graph -> Bool
 isMultigraph = any (hasDuplicates . snd) . graphToAdjacency
   where
     hasDuplicates a = length (nub a) /= length a
+
+complete :: Int -> Graph 
+complete n = (iN, [(i,j) | i<-iN,j<-[i..n], i/=j]) 
+  where 
+    iN = [1..n]
 
 graph1 :: Graph
 graph1 =

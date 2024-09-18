@@ -33,8 +33,20 @@ epsilon d = maximum $ [sum $ map abs (vepsilon d v) | v <- (fst d)]
 
 -- Grafo cuadrangular con pesos 
 gSq :: Graph
-gSq = ([1,2,3,4],[(1,2),(2,3),(3,4),(2,4),(3,1)])
+gSq = ([1,2,3,4],[(1,2),(2,3),(3,4),(2,4)])
 
-wgSq = ([1,2,3,4],[((1,2),1),((2,3),-2),((3,4),4),((2,4),2),((3,1),-1),((1,4),2)])
+--wgSq = ([1,2,3,4],[((1,2),1),((2,3),-2),((3,4),4),((2,4),2),((3,1),-1),((1,4),2)])
 
-wgSq1 = graphToWDG gSq [-1,5,4,2,-1,2]
+wgSq = graphToWDG gSq [-1,5,-4,2,1]
+
+
+--Conjetura 2 
+--D=(G,w)
+
+d = graphToWDG ([1,2,3,4],[(1,2),(1,4),(3,4),(2,4)]) [-2,2,-1,2]
+
+d1 = graphToWDG gSq [1,1,2,-1]
+
+d1' = (fst d, (map (\(e,w) -> (e, (1-epsilon d)*w)) (snd d)) ++ [((1,4), epsilon d)])
+
+d' = (fst d, (map (\(e,w) -> (e, (1-epsilon d)*w)) (snd d)) ++ [((1,3), epsilon d)])
